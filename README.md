@@ -51,13 +51,8 @@ long-term-memory/
 ├── 🌐 app.py                    # Streamlit web interface
 ├── 📋 requirements.txt          # Python dependencies
 ├── 📖 README.md                 # Project documentation
-├── 🗄️ memory.db                 # SQLite database (auto-created)
-├── 🔧 .env                      # Environment variables (OpenAI API key)
 ├── 📁 media/                    # Documentation assets
-│   └── system_architecture.svg  # System architecture diagram
-├── 📁 Extra/                    # Additional resources
-│   └── my_task.txt             # Project requirements and tasks
-└── 📁 .venv/                   # Python virtual environment
+
 ```
 
 ### Core Files Description
@@ -123,7 +118,7 @@ memory_system = LongTermMemorySystem(os.getenv("OPENAI_API_KEY"))
 
 # Process a message and extract memories
 result = memory_system.process_message(
-    "I use Shram and Magnet as productivity tools", 
+    "I use Magnet as productivity tools", 
     user_id="user123"
 )
 
@@ -131,7 +126,7 @@ result = memory_system.process_message(
 answer = memory_system.answer_with_memory(
     "What productivity tools do I use?"
 )
-print(answer)  # Output: "You use Shram and Magnet"
+print(answer)  # Output: "You use Magnet"
 ```
 
 ### Memory Operations

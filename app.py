@@ -477,7 +477,7 @@ def memory_creation_page(memory_system):
         # User input
         user_message = st.text_area(
             "Enter your message:",
-            placeholder="e.g., 'I use Shram and Magnet as productivity tools'",
+            placeholder="e.g., 'I use Magnet as productivity tools'",
             height=100
         )
         
