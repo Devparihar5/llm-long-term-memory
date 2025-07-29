@@ -57,7 +57,7 @@ long-term-memory/
 
 ### Core Files Description
 
-#### `memory_system.py` (18,119 bytes)
+#### `memory_system.py`
 The main implementation containing all core classes:
 
 - **Memory**: Data class representing a memory entry with fields for content, category, importance, timestamp, embedding, and metadata
@@ -68,7 +68,7 @@ The main implementation containing all core classes:
 - **MemoryDatabase**: SQLite database operations for persistent storage
 - **LongTermMemorySystem**: Main orchestrator class providing the public API
 
-#### `app.py` (31,620 bytes)
+#### `app.py` 
 Comprehensive Streamlit web interface featuring:
 
 - **Chat & Memory**: Interactive conversation with real-time memory extraction
@@ -230,22 +230,6 @@ class Memory:
 - **Access Control**: Implement user authentication for multi-user scenarios
 - **Data Retention**: Implement memory expiration policies if needed
 
-## 🚧 Limitations
-
-- Depends on OpenAI API availability and costs
-- Memory extraction accuracy depends on GPT model performance
-- Vector search requires sufficient memory for large datasets
-- No built-in user authentication (single-user by default)
-
-## 🔮 Future Enhancements
-
-- **Multi-user Support**: User authentication and isolation
-- **Memory Expiration**: Automatic cleanup of old memories
-- **Advanced Analytics**: More sophisticated memory analysis
-- **Integration APIs**: REST API for external system integration
-- **Memory Compression**: Summarization of related memories
-- **Conflict Resolution**: Advanced handling of contradictory memories
-
 ## 📝 API Reference
 
 ### LongTermMemorySystem
@@ -278,6 +262,5 @@ Data class representing a memory entry:
 3. Make your changes
 4. Add tests if applicable
 5. Submit a pull request
-
 
 **Happy LLM Calling! 🧠✨**
