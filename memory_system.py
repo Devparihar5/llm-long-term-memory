@@ -11,12 +11,10 @@ from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass, asdict
 import faiss
 import logging
-from pathlib import Path
 
 # LangChain imports
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain.schema import HumanMessage
-from langchain.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel, Field
 
 # Configure logging
