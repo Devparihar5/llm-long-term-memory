@@ -1,0 +1,105 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "llm-long-term-memory"
+version = "0.1.0"
+description = "Give your AI agents persistent, searchable long-term memory with pluggable storage backends"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+authors = [
+    {name = "Devendra Parihar", email = "devendraparihar340@gmail.com"},
+]
+maintainers = [
+    {name = "Devendra Parihar", email = "devendraparihar340@gmail.com"},
+]
+keywords = [
+    "llm",
+    "memory",
+    "langchain",
+    "openai",
+    "ai-agents",
+    "long-term-memory",
+    "vector-search",
+    "faiss",
+    "rag",
+    "chatbot",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "langchain>=0.1.0",
+    "langchain-openai>=0.0.5",
+    "openai>=1.0.0",
+    "faiss-cpu>=1.7.4",
+    "numpy>=1.24.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+postgresql = ["psycopg2-binary>=2.9.0"]
+mongodb = ["pymongo>=4.0.0"]
+redis = ["redis>=4.0.0"]
+all = [
+    "psycopg2-binary>=2.9.0",
+    "pymongo>=4.0.0",
+    "redis>=4.0.0",
+]
+streamlit = ["streamlit>=1.30.0"]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.0.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Devparihar5/llm-long-term-memory"
+Documentation = "https://github.com/Devparihar5/llm-long-term-memory#readme"
+Repository = "https://github.com/Devparihar5/llm-long-term-memory.git"
+Issues = "https://github.com/Devparihar5/llm-long-term-memory/issues"
+Changelog = "https://github.com/Devparihar5/llm-long-term-memory/releases"
+
+[tool.hatch.build.targets.wheel]
+packages = ["llm_memory"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/llm_memory",
+    "/README.md",
+    "/LICENSE",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=llm_memory --cov-report=term-missing"

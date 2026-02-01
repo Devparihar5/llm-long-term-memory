@@ -19,7 +19,7 @@ from langchain_core.messages import HumanMessage
 from pydantic import BaseModel, Field
 
 # Storage backends
-from storage_backends import (
+from llm_memory.backends import (
     Memory,
     StorageBackend,
     SQLiteBackend,
