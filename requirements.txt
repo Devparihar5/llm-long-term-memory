@@ -1,9 +1,0 @@
-langchain
-langchain-openai
-langchain_core
-faiss-cpu
-numpy
-streamlit
-pandas
-plotly
-pydantic

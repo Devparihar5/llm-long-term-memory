@@ -1,266 +1,272 @@
-# 🧠 Advanced Long-Term Memory System for LLM Agents
+# 🧠 LLM Long-Term Memory
+
+[![PyPI version](https://badge.fury.io/py/llm-long-term-memory.svg)](https://badge.fury.io/py/llm-long-term-memory)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+**Give your AI agents persistent, searchable long-term memory with pluggable storage backends.**
 
 A sophisticated memory storage and retrieval system that provides LLMs with persistent, searchable long-term memory capabilities. This system can extract, store, update, and retrieve memories from conversations, enabling AI agents to maintain context across multiple sessions.
 
 ## ✨ Features
 
-- **Intelligent Memory Extraction**: Automatically extracts factual information from conversations using OpenAI GPT
-- **Semantic Search**: Vector-based similarity search using OpenAI embeddings and FAISS
-- **Memory Management**: Add, update, and delete memories with conflict resolution
-- **Persistent Storage**: SQLite database for reliable memory persistence
-- **Category Organization**: Automatic categorization of memories (tools, preferences, personal, habits, etc.)
-- **Importance Scoring**: Weighted importance system for memory prioritization
-- **Real-time Updates**: Detect and process memory updates and deletions from natural language
-- **Web Interface**: Comprehensive Streamlit-based testing and management interface
-- **LangChain Integration**: Built with LangChain for robust LLM interactions
-- **Modular Architecture**: Clean separation of concerns with well-defined components
+- 🧠 **Intelligent Memory Extraction** - Automatically extracts factual information from conversations using OpenAI GPT
+- 🔍 **Semantic Search** - Vector-based similarity search using OpenAI embeddings and FAISS
+- 💾 **Pluggable Storage Backends** - SQLite, PostgreSQL, MongoDB, and Redis support
+- 🔄 **Memory Management** - Add, update, and delete memories with conflict resolution
+- 📊 **Category Organization** - Automatic categorization of memories
+- ⚡ **Importance Scoring** - Weighted importance system for memory prioritization
+- 🔗 **LangChain Integration** - Built with LangChain for robust LLM interactions
 
-## 🏗️ Architecture
-
-The system follows a layered architecture with clear separation of concerns:
-
-![System Architecture](media/memory_architecture.png)
-
-### Core Components
-
-1. **LongTermMemorySystem** - Main orchestrator that coordinates all components
-2. **MemoryExtractor** - Uses OpenAI GPT via LangChain to extract and categorize memories
-3. **VectorStore** - Handles embedding generation and semantic search using OpenAI embeddings and FAISS
-4. **MemoryDatabase** - SQLite-based persistent storage with CRUD operations
-
-### Data Flow Pipeline
-
-1. **Input Processing**: Analyze user messages and detect memory updates
-2. **Memory Processing**: Extract, categorize, and score memories for importance
-3. **Storage**: Persist memories in SQLite and index vectors in FAISS
-4. **Retrieval**: Semantic search and similarity matching for relevant memories
-5. **Response Generation**: Context-aware, memory-enhanced responses
-
-### External Dependencies
-
-- **OpenAI API**: GPT-3.5 Turbo for memory extraction and text embeddings
-- **LangChain**: Framework for LLM interactions and prompt management
-- **FAISS**: Facebook AI Similarity Search for vector indexing
-- **SQLite**: Lightweight, serverless database for persistent storage
-
-## 📁 Project Structure
-
-```
-long-term-memory/
-├── 📄 memory_system.py          # Core memory system implementation
-├── 🌐 app.py                    # Streamlit web interface
-├── 📋 requirements.txt          # Python dependencies
-├── 📖 README.md                 # Project documentation
-├── 📁 media/                    # Documentation assets
-
-```
-
-### Core Files Description
-
-#### `memory_system.py`
-The main implementation containing all core classes:
-
-- **Memory**: Data class representing a memory entry with fields for content, category, importance, timestamp, embedding, and metadata
-- **ExtractedMemory**: Pydantic model for structured memory extraction
-- **MemoryUpdate**: Pydantic model for memory update operations
-- **MemoryExtractor**: Handles memory extraction and update detection using GPT-3.5 Turbo
-- **VectorStore**: Manages vector embeddings and similarity search with FAISS
-- **MemoryDatabase**: SQLite database operations for persistent storage
-- **LongTermMemorySystem**: Main orchestrator class providing the public API
-
-#### `app.py` 
-Comprehensive Streamlit web interface featuring:
-
-- **Chat & Memory**: Interactive conversation with real-time memory extraction
-- **Query Memories**: Search interface with semantic similarity
-- **Memory Analytics**: Visualizations and statistics dashboard
-- **Memory Management**: CRUD operations for stored memories
-- **System Configuration**: Settings and API key management
-
-#### `requirements.txt`
-Essential Python dependencies:
-```
-langchain
-langchain-openai
-faiss-cpu
-numpy
-streamlit
-pandas
-plotly
-pydantic
-```
-
-## 📋 Requirements
-
-- Python 3.8+
-- OpenAI API key
-- Required packages (see requirements.txt)
-
-## 🚀 Installation
-
-1. Clone or download the project files
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## 💡 Usage
-
-### Basic Usage
-
-```python
-from memory_system import LongTermMemorySystem
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-memory_system = LongTermMemorySystem(os.getenv("OPENAI_API_KEY"))
-
-# Process a message and extract memories
-result = memory_system.process_message(
-    "I use Magnet as productivity tools", 
-    user_id="user123"
-)
-
-# Query memories
-answer = memory_system.answer_with_memory(
-    "What productivity tools do I use?"
-)
-print(answer)  # Output: "You use Magnet"
-```
-
-### Memory Operations
-
-```python
-# Extract memories from conversation
-result = memory_system.process_message(
-    "I don't use Magnet anymore, I switched to Notion",
-    user_id="user123"
-)
-
-# Search for similar memories
-memories = memory_system.query_memories("productivity tools", k=5)
-
-# Get all memories
-all_memories = memory_system.get_all_memories()
-
-# Delete a specific memory
-memory_system.delete_memory(memory_id)
-
-# Get memory statistics
-stats = memory_system.get_memory_stats()
-```
-
-### Web Interface
-
-Launch the Streamlit interface:
+## 📦 Installation
 
 ```bash
-streamlit run app.py
+# Basic installation (SQLite backend)
+pip install llm-long-term-memory
+
+# With PostgreSQL support
+pip install llm-long-term-memory[postgresql]
+
+# With MongoDB support
+pip install llm-long-term-memory[mongodb]
+
+# With Redis support
+pip install llm-long-term-memory[redis]
+
+# With all backends
+pip install llm-long-term-memory[all]
+
+# With Streamlit UI
+pip install llm-long-term-memory[streamlit]
 ```
 
-The web interface provides:
-- **Chat & Memory**: Interactive conversation with memory extraction
-- **Query Memories**: Search and question-answering interface
-- **Memory Analytics**: Visualizations and statistics
-- **Memory Management**: View, filter, and delete memories
+## 🚀 Quick Start
 
-### Customization
+```python
+from llm_memory import LongTermMemorySystem
 
-You can customize various aspects of the system:
+# Initialize with SQLite (default)
+memory = LongTermMemorySystem(openai_api_key="your-api-key")
 
-- **Embedding Model**: Change the OpenAI embedding model in `VectorStore` (text-embedding-3-small or text-embedding-3-large)
-- **Database Path**: Specify a custom database location
-- **Memory Categories**: Modify the category extraction logic in `MemoryExtractor`
-- **Importance Scoring**: Adjust the importance calculation algorithm
+# Process a message and extract memories
+result = memory.process_message(
+    "I use VS Code for Python development and prefer dark mode", 
+    user_id="user123"
+)
+print(f"Extracted {len(result['new_memories'])} memories")
+
+# Query memories
+answer = memory.answer_with_memory("What IDE do I use?")
+print(answer)  # "You use VS Code for Python development"
+
+# Get all memories
+memories = memory.get_all_memories()
+for mem in memories:
+    print(f"- {mem.content} (importance: {mem.importance})")
+```
+
+## 💾 Storage Backends
+
+### SQLite (Default)
+
+```python
+from llm_memory import LongTermMemorySystem
+
+memory = LongTermMemorySystem(
+    openai_api_key="...",
+    storage_backend="sqlite",
+    storage_config={"db_path": "my_memories.db"}
+)
+```
+
+### PostgreSQL
+
+```python
+from llm_memory import LongTermMemorySystem
+
+memory = LongTermMemorySystem(
+    openai_api_key="...",
+    storage_backend="postgresql",
+    storage_config={
+        "connection_string": "postgresql://user:password@localhost:5432/memory_db"
+    }
+)
+```
+
+### MongoDB
+
+```python
+from llm_memory import LongTermMemorySystem
+
+memory = LongTermMemorySystem(
+    openai_api_key="...",
+    storage_backend="mongodb",
+    storage_config={
+        "connection_string": "mongodb://localhost:27017",
+        "database": "memory_db",
+        "collection": "memories"
+    }
+)
+```
+
+### Redis
+
+```python
+from llm_memory import LongTermMemorySystem
+
+memory = LongTermMemorySystem(
+    openai_api_key="...",
+    storage_backend="redis",
+    storage_config={
+        "host": "localhost",
+        "port": 6379,
+        "password": "optional_password"
+    }
+)
+```
+
+### Custom Backend
+
+```python
+from llm_memory import StorageBackend, Memory, LongTermMemorySystem
+
+class MyCustomBackend(StorageBackend):
+    def init_storage(self) -> None:
+        # Initialize your storage
+        pass
+    
+    def save_memory(self, memory: Memory) -> None:
+        # Save memory
+        pass
+    
+    def get_memory(self, memory_id: str) -> Memory:
+        # Get memory by ID
+        pass
+    
+    def get_all_memories(self) -> list:
+        # Get all memories
+        pass
+    
+    def delete_memory(self, memory_id: str) -> bool:
+        # Delete memory
+        pass
+    
+    def search_memories(self, query: str, category: str = None) -> list:
+        # Search memories
+        pass
+    
+    def close(self) -> None:
+        # Close connections
+        pass
+
+# Use your custom backend
+memory = LongTermMemorySystem(
+    openai_api_key="...",
+    storage_backend=MyCustomBackend()
+)
+```
 
 ## 📊 Memory Structure
 
-Each memory contains:
+```python
+from llm_memory import Memory
+
+# Each memory contains:
+memory = Memory(
+    id="unique_id",
+    content="User prefers dark mode",
+    category="preferences",
+    importance=0.8,
+    timestamp="2024-01-15T10:30:00",
+    embedding=[...],  # Vector embedding
+    metadata={"user_id": "user123", "source": "chat"}
+)
+```
+
+## 🔧 API Reference
+
+### LongTermMemorySystem
 
 ```python
-@dataclass
-class Memory:
-    id: str                    # Unique identifier
-    content: str              # The actual memory content
-    category: str             # Category (tools, preferences, personal, etc.)
-    importance: float         # Importance score (0.0 to 1.0)
-    timestamp: str           # Creation/update timestamp
-    embedding: List[float]   # Vector embedding for semantic search
-    metadata: Dict          # Additional metadata (user_id, source, etc.)
+# Initialize
+memory = LongTermMemorySystem(
+    openai_api_key: str,              # Required: OpenAI API key
+    storage_backend: str = "sqlite",   # Backend type or instance
+    storage_config: dict = None,       # Backend-specific config
+    embedding_model: str = "text-embedding-3-small",
+    llm_model: str = "gpt-3.5-turbo",
+)
+
+# Methods
+memory.process_message(message, user_id, context)  # Extract memories from message
+memory.query_memories(query, k=5)                  # Semantic search for memories
+memory.answer_with_memory(question, max_memories)  # Answer using memory context
+memory.get_all_memories()                          # Get all stored memories
+memory.delete_memory(memory_id)                    # Delete specific memory
+memory.get_memory_stats()                          # Get statistics
+memory.close()                                     # Close connections
+```
+
+### Context Manager Support
+
+```python
+from llm_memory import LongTermMemorySystem
+
+with LongTermMemorySystem(openai_api_key="...") as memory:
+    memory.process_message("Hello!", user_id="user123")
+    # Connections automatically closed when done
 ```
 
 ## 🎯 Use Cases
 
-1. **Personal AI Assistants**: Remember user preferences, habits, and information
-2. **Customer Service Bots**: Maintain customer history and preferences
-3. **Educational AI**: Track learning progress and personalized content
-4. **Productivity Tools**: Remember user workflows and tool preferences
-5. **Healthcare AI**: Maintain patient information and medical history (with proper security)
+1. **Personal AI Assistants** - Remember user preferences, habits, and information
+2. **Customer Service Bots** - Maintain customer history and preferences  
+3. **Educational AI** - Track learning progress and personalized content
+4. **Productivity Tools** - Remember user workflows and tool preferences
+5. **Healthcare AI** - Maintain patient information (with proper security)
 
-## 🔍 How It Works
+## 🌐 Web Interface
 
-### Memory Extraction Process
+If you installed with `[streamlit]`:
 
-1. **Input Processing**: User message is analyzed by GPT
-2. **Fact Extraction**: GPT identifies factual statements about the user
-3. **Categorization**: Memories are automatically categorized
-4. **Importance Scoring**: Each memory receives an importance score
-5. **Embedding Generation**: Vector embeddings are created for semantic search
-6. **Storage**: Memories are stored in both SQLite database and FAISS index
+```bash
+# Clone the repo for the app.py
+git clone https://github.com/Devparihar5/llm-long-term-memory.git
+cd llm-long-term-memory
 
-### Memory Retrieval Process
-
-1. **Query Processing**: User query is converted to vector embedding
-2. **Semantic Search**: FAISS finds most similar memories
-3. **Context Assembly**: Relevant memories are formatted as context
-4. **Answer Generation**: GPT generates response using memory context
-
-### Memory Update Process
-
-1. **Update Detection**: GPT analyzes new messages for memory updates
-2. **Conflict Resolution**: System identifies memories to update or delete
-3. **Database Updates**: Changes are applied to persistent storage
-4. **Index Maintenance**: Vector index is updated accordingly
+# Run the Streamlit app
+streamlit run app.py
+```
 
 ## 🔒 Security Considerations
 
-- **API Key Security**: Store OpenAI API keys securely
-- **Data Privacy**: Consider encryption for sensitive memories
-- **Access Control**: Implement user authentication for multi-user scenarios
-- **Data Retention**: Implement memory expiration policies if needed
-
-## 📝 API Reference
-
-### LongTermMemorySystem
-
-Main class for memory operations:
-
-- `process_message(message, user_id, context)`: Extract memories from message
-- `query_memories(query, k)`: Search for similar memories
-- `answer_with_memory(question, max_memories)`: Answer using memory context
-- `get_all_memories()`: Retrieve all stored memories
-- `delete_memory(memory_id)`: Delete specific memory
-- `get_memory_stats()`: Get system statistics
-
-### Memory
-
-Data class representing a memory entry:
-
-- `id`: Unique identifier
-- `content`: Memory content
-- `category`: Memory category
-- `importance`: Importance score
-- `timestamp`: Creation time
-- `embedding`: Vector embedding
-- `metadata`: Additional data
+- Store API keys securely (use environment variables)
+- Use secure connection strings for databases
+- Consider encryption for sensitive memories
+- Implement user authentication for multi-user scenarios
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-**Happy LLM Calling! 🧠✨**
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [LangChain](https://github.com/langchain-ai/langchain)
+- Vector search powered by [FAISS](https://github.com/facebookresearch/faiss)
+- Embeddings by [OpenAI](https://openai.com)
+
+---
+
+**Made with ❤️ by [Devendra Parihar](https://github.com/Devparihar5)**
+
+*Contributions by [Divya](https://github.com/piechartXdata) ✨*
